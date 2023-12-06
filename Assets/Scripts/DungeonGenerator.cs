@@ -19,5 +19,6 @@ public class DungeonGenerator
     {
         BinarySpacePartitioner bsp = new BinarySpacePartitioner(dungeonWidth, dungeonLength);
         allSpaceNodes = bsp.PrepareNodesCollection(maxIterations, roomWidthMin, roomLengthMin);
+        return new List<Node>(allSpaceNodes);
     }
 }

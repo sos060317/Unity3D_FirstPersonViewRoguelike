@@ -30,6 +30,7 @@ public class BinarySpacePartitioner
                 SplitTheSpace(curretNode, listToReturn, roomWidthMin, roomLengthMin, graph);
             }
         }
+        return listToReturn;
     }
 
     private void SplitTheSpace(RoomNode curretNode, List<RoomNode> listToReturn, int roomWidthMin, int roomLengthMin, Queue<RoomNode> graph)
@@ -39,7 +40,37 @@ public class BinarySpacePartitioner
             curretNode.TopRightAreaCorner,
             roomWidthMin,
             roomLengthMin);
+        RoomNode node1, node2;
+        if (line.Orientation == Orientation.Horizontal)
+        {
+            node1 = new RoomNode(curretNode.BottomLeftAreaCorner,
+                new Vector2Int(curretNode.TopRightAreaCorner.x, line.Coordinates.y),
+                curretNode,
+                curretNode.TreeLayerIndex + 1);
+            node2 = new RoomNode(new Vector2Int(curretNode.BottomLeftAreaCorner.x, line.Coordinates.y),
+                curretNode.TopRightAreaCorner,
+                curretNode,
+                curretNode.TreeLayerIndex + 1);
+        }
+        else
+        {
+            node1 = new RoomNode(curretNode.BottomLeftAreaCorner,
+                new Vector2Int(line.Coordinates.x, curretNode.TopRightAreaCorner.y),
+                curretNode,
+                curretNode.TreeLayerIndex + 1);
+            node2 = new RoomNode(new Vector2Int(line.Coordinates.x, curretNode.BottomLeftAreaCorner.y),
+                curretNode.TopRightAreaCorner,
+                curretNode,
+                curretNode.TreeLayerIndex + 1);
+        }
+        AddNewNodeToCollections(listToReturn, graph, node1);
+        AddNewNodeToCollections(listToReturn, graph, node2);
+    }
 
+    private void AddNewNodeToCollections(List<RoomNode> listToReturn, Queue<RoomNode> graph, RoomNode node)
+    {
+        listToReturn.Add(node);
+        graph.Enqueue(node);
     }
 
     private Line GetLineDividingSpace(Vector2Int bottomLeftAreaCorner, Vector2Int topRightAreaCorner, int roomWidthMin, int roomLengthMin)

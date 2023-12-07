@@ -1,4 +1,7 @@
-﻿internal class RoomGenerator
+﻿using System;
+using System.Collections.Generic;
+
+public class RoomGenerator
 {
     private int maxIterations;
     private int roomWidthMin;
@@ -9,5 +12,10 @@
         this.maxIterations = maxIterations;
         this.roomWidthMin = roomWidthMin;
         this.roomLengthMin = roomLengthMin;
+    }
+
+    public List<RoomNode> GenerateRoomsInGivenSpaces(List<Node> roomSpaces)
+    {
+        throw new NotImplementedException();
     }
 }

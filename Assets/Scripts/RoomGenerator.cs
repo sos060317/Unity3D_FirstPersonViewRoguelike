@@ -16,6 +16,6 @@ public class RoomGenerator
 
     public List<RoomNode> GenerateRoomsInGivenSpaces(List<Node> roomSpaces)
     {
-        throw new NotImplementedException();
+        List<RoomNode> listToReturn = new List<RoomNode>();
     }
 }

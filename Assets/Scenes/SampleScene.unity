@@ -200,8 +200,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalRotation: {x: 0.04904699, y: 0.80242604, z: -0.59099245, w: 0.0665942}
+  m_LocalPosition: {x: 38.700577, y: 136.91843, z: 83.80694}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -453,5 +453,6 @@ MonoBehaviour:
   dungeonLength: 100
   roomWidthMin: 25
   roomLengthMin: 25
-  maxIterations: 1
+  maxIterations: 10
   corridorWidth: 5
+  material: {fileID: 2100000, guid: 5924728902b7265428963daa97974d78, type: 2}

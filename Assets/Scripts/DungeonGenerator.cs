@@ -23,6 +23,6 @@ public class DungeonGenerator
 
         RoomGenerator roomGenerator = new RoomGenerator(maxIterations, roomWidthMin, roomLengthMin);
         List<RoomNode> roomList = roomGenerator.GenerateRoomsInGivenSpaces(roomSpaces);
-        return new List<Node>(allSpaceNodes);
+        return new List<Node>(roomList);
     }
 }

@@ -456,3 +456,6 @@ MonoBehaviour:
   maxIterations: 10
   corridorWidth: 5
   material: {fileID: 2100000, guid: 5924728902b7265428963daa97974d78, type: 2}
+  roomBottomCornerModifier: 0.1
+  roomTopCornerModifier: 0.9
+  roomOffset: 1

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DungeonGenerator
 {
-    List<RoomNode> allSpaceNodes = new List<RoomNode>();
+    List<RoomNode> allNodesCollection = new List<RoomNode>();
 
     private int dungeonWidth;
     private int dungeonLength;
@@ -15,14 +15,18 @@ public class DungeonGenerator
         this.dungeonLength = dungeonLength;
     }
 
-    public List<Node> CalculateRooms(int maxIterations, int roomWidthMin, int roomLengthMin)
+    public List<Node> CalculateDungeon(int maxIterations, int roomWidthMin, int roomLengthMin, float roomBottomCornerModifier, float roomTopCornerModifier, int roomOffset, int corridorWidth)
     {
         BinarySpacePartitioner bsp = new BinarySpacePartitioner(dungeonWidth, dungeonLength);
-        allSpaceNodes = bsp.PrepareNodesCollection(maxIterations, roomWidthMin, roomLengthMin);
+        allNodesCollection = bsp.PrepareNodesCollection(maxIterations, roomWidthMin, roomLengthMin);
         List<Node> roomSpaces = StructureHelper.TraverseGraphToExtractLowestLeafes(bsp.RootNode);
 
         RoomGenerator roomGenerator = new RoomGenerator(maxIterations, roomWidthMin, roomLengthMin);
-        List<RoomNode> roomList = roomGenerator.GenerateRoomsInGivenSpaces(roomSpaces);
+        List<RoomNode> roomList = roomGenerator.GenerateRoomsInGivenSpaces(roomSpaces, roomBottomCornerModifier, roomTopCornerModifier, roomOffset);
+
+        CorridorsGenerator corridorGenerator = new CorridorsGenerator();
+        var corridorList = corridorGenerator.CreateCorridor(allNodesCollection, corridorWidth);
+
         return new List<Node>(roomList);
     }
 }

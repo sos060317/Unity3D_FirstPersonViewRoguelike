@@ -175,6 +175,8 @@ public class CorridorNode : Node
                 topStructure.BottomLeftAreaCorner,
                 topStructure.BottomRightAreaCorner);
         }
+        BottomLeftAreaCorner = new Vector2Int(x, bottomStructure.TopLeftAreaCorner.y);
+        TopRightAreaCorner = new Vector2Int(x + this.corridorWidth, topStructure.BottomLeftAreaCorner.y);
     }
 
     private int GetValidXForNeighbourUpDown(Vector2Int bottomNodeLeft,
@@ -194,7 +196,7 @@ public class CorridorNode : Node
                 topNodeRight - new Vector2Int(this.corridorWidth + modifierDistanceFromWall, 0)
                 ).x;
         }
-        if (bottomNodeLeft.x >= topNodeLeft.x && bottomNodeLeft.x <= topNodeRight.x)
+        if (bottomNodeLeft.x >= (topNodeLeft.x) && bottomNodeLeft.x <= topNodeRight.x)
         {
             return StructureHelper.CalculateMiddlePoint(
                 bottomNodeLeft + new Vector2Int(modifierDistanceFromWall, 0),

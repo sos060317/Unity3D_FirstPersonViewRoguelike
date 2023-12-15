@@ -33,7 +33,7 @@ public class BinarySpacePartitioner
         return listToReturn;
     }
 
-    private void SplitTheSpace(RoomNode curretNode, List<RoomNode> listToReturn, int roomWidthMin, int roomLengthMin, Queue<RoomNode> graph)
+    private void SplitTheSpace(RoomNode curretNode, List<RoomNode> listToReturn, int roomLengthMin, int roomWidthMin, Queue<RoomNode> graph)
     {
         Line line = GetLineDividingSpace(
             curretNode.BottomLeftAreaCorner,

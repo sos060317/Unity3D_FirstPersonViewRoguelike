@@ -5,23 +5,32 @@ using UnityEngine;
 
 public class DungeonCreator : MonoBehaviour
 {
-    public int dungeonWidth, dungeonLength;
-    public int roomWidthMin, roomLengthMin;
-    public int maxIterations;
-    public int corridorWidth;
+    [Header("던전 설정")]
+    public int dungeonWidth;  //던전 너비
+    public int dungeonLength; //던전 길이
+    public int roomWidthMin;  //던전 룸 최소 너비
+    public int roomLengthMin; //던전 룸 최소 길이
+    public int maxIterations; //던전을 자를 반복 횟수(BSP알고리즘 반복 횟수)
+    public int corridorWidth; //던전 룸을 이어주는 통로의 너비
+
+    [Header("던전 재질")]
     public Material material;
-    [Range(0.0f, 0.3f)]
+
+    [Range(-10.0f, 10.3f)]
     public float roomBottomCornerModifier;
-    [Range(0.7f, 1.0f)]
+    [Range(-10.7f, 10.0f)]
     public float roomTopCornerModifier;
     [Range(0, 2)]
     public int roomOffset;
 
     private void Start()
     {
+        //던전 생성 함수
         CreateDungeon();
     }
-
+    /// <summary>
+    /// 던전 생성 함수
+    /// </summary>
     private void CreateDungeon()
     {
         DungeonGenerator generator = new DungeonGenerator(dungeonWidth, dungeonLength);

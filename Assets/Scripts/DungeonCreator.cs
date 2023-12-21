@@ -34,13 +34,14 @@ public class DungeonCreator : MonoBehaviour
         //던전 생성 함수
         CreateDungeon();
     }
-    /// <summary>
-    /// 던전 생성 함수
-    /// </summary>
+
+    // 던전 생성 함수
     public void CreateDungeon()
     {
         DestroyAllChildren();
         DungeonGenerator generator = new DungeonGenerator(dungeonWidth, dungeonLength);
+        
+        // 던전 계산기
         var listOfRooms = generator.CalculateDungeon(maxIterations,
             roomWidthMin,
             roomLengthMin,
@@ -48,36 +49,47 @@ public class DungeonCreator : MonoBehaviour
             roomTopCornerModifier,
             roomOffset,
             corridorWidth);
+
+        // 벽 정보 초기화
         GameObject wallParent = new GameObject("WallParent");
         wallParent.transform.parent = transform;
         possibleDoorVerticalPosition = new List<Vector3Int>();
         possibleDoorHorizontalPositon = new List<Vector3Int>();
         possibleWallHorizontalPositon = new List<Vector3Int>();
         possibleWallVerticalPosition = new List<Vector3Int>();
+
+        // 던전 바닥 생성
         for (int i = 0; i < listOfRooms.Count; i++)
         {
             CreateMesh(listOfRooms[i].BottomLeftAreaCorner, listOfRooms[i].TopRightAreaCorner);
         }
+
+        // 던전 벽(여러개)생성
         CreateWalls(wallParent);
     }
 
     private void CreateWalls(GameObject wallParent)
     {
+        // 가로 벽
         foreach(var wallPosition in possibleWallHorizontalPositon)
         {
             CreateWall(wallParent, wallPosition, wallHorizontal);
         }
+
+        // 세로 벽
         foreach (var wallPosition in possibleWallVerticalPosition)
         {
             CreateWall(wallParent, wallPosition, wallVertical); 
         }
     }
 
+    // 벽(한개) 생성
     private void CreateWall(GameObject wallParent, Vector3Int wallPosition, GameObject wallPrefab)
     {
         Instantiate(wallPrefab, wallPosition, Quaternion.identity, wallParent.transform);
     }
 
+    // 바닥 메쉬 생성
     private void CreateMesh(Vector2 bottomLeftCorner, Vector2 topRightCorner)
     {
         Vector3 bottomLeftV = new Vector3(bottomLeftCorner.x, 0, bottomLeftCorner.y);

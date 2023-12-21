@@ -12,6 +12,7 @@ public class DungeonGenerator
 
     public DungeonGenerator(int dungeonWidth, int dungeonLength)
     {
+        // 던전 크기 초기화
         this.dungeonWidth = dungeonWidth;
         this.dungeonLength = dungeonLength;
     }

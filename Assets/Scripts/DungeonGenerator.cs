@@ -7,8 +7,8 @@ public class DungeonGenerator
 {
     List<RoomNode> allNodesCollection = new List<RoomNode>();
 
-    private int dungeonWidth;
-    private int dungeonLength;
+    private int dungeonWidth;  // 던전 너비
+    private int dungeonLength; // 던전 길이
 
     public DungeonGenerator(int dungeonWidth, int dungeonLength)
     {

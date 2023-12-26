@@ -41,7 +41,7 @@ public class DungeonCreator : MonoBehaviour
         DestroyAllChildren();
         DungeonGenerator generator = new DungeonGenerator(dungeonWidth, dungeonLength);
         
-        // 던전 계산기
+        // 던전 계산기(던전 쪼개기, 룸만들기)
         var listOfRooms = generator.CalculateDungeon(maxIterations,
             roomWidthMin,
             roomLengthMin,

@@ -26,10 +26,12 @@ public abstract class Node
     {
         childrenNodeList = new List<Node>();
         this.Parent = parentNode;
-        if(parentNode != null)
+        //parentNode?.AddChild(this);
+        if(parentNode != null) // 최상위 노드인지를 검사, 아니면 실행
         {
             parentNode.AddChild(this);
         }
+
     }
 
     public void AddChild(Node node)

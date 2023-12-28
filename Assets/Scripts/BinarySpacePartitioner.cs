@@ -11,57 +11,61 @@ public class BinarySpacePartitioner
 
     public BinarySpacePartitioner(int dungeonWidth, int dungeonLength)
     {
+        // 최상위 노드를 생성
         this.rootNode = new RoomNode(new Vector2Int(0, 0), new Vector2Int(dungeonWidth, dungeonLength), null, 0);
     }
 
     public List<RoomNode> PrepareNodesCollection(int maxIterations, int roomWidthMin, int roomLengthMin)
     {
+        // 초기화(세팅)
         Queue<RoomNode> graph = new Queue<RoomNode>();
         List<RoomNode> listToReturn = new List<RoomNode>();
         graph.Enqueue(this.rootNode);
         listToReturn.Add(this.rootNode);
         int iterations = 0;
+
+        // 
         while (iterations < maxIterations && graph.Count > 0)
         {
             iterations++;
-            RoomNode curretNode = graph.Dequeue();
-            if (curretNode.Width >= roomWidthMin * 2 || curretNode.Length >= roomLengthMin * 2)
+            RoomNode currentNode = graph.Dequeue();
+            if (currentNode.Width >= roomWidthMin * 2 || currentNode.Length >= roomLengthMin * 2)
             {
-                SplitTheSpace(curretNode, listToReturn, roomWidthMin, roomLengthMin, graph);
+                SplitTheSpace(currentNode, listToReturn, roomWidthMin, roomLengthMin, graph);
             }
         }
         return listToReturn;
     }
 
-    private void SplitTheSpace(RoomNode curretNode, List<RoomNode> listToReturn, int roomLengthMin, int roomWidthMin, Queue<RoomNode> graph)
+    private void SplitTheSpace(RoomNode currentNode, List<RoomNode> listToReturn, int roomLengthMin, int roomWidthMin, Queue<RoomNode> graph)
     {
         Line line = GetLineDividingSpace(
-            curretNode.BottomLeftAreaCorner,
-            curretNode.TopRightAreaCorner,
+            currentNode.BottomLeftAreaCorner,
+            currentNode.TopRightAreaCorner,
             roomWidthMin,
             roomLengthMin);
         RoomNode node1, node2;
         if (line.Orientation == Orientation.Horizontal)
         {
-            node1 = new RoomNode(curretNode.BottomLeftAreaCorner,
-                new Vector2Int(curretNode.TopRightAreaCorner.x, line.Coordinates.y),
-                curretNode,
-                curretNode.TreeLayerIndex + 1);
-            node2 = new RoomNode(new Vector2Int(curretNode.BottomLeftAreaCorner.x, line.Coordinates.y),
-                curretNode.TopRightAreaCorner,
-                curretNode,
-                curretNode.TreeLayerIndex + 1);
+            node1 = new RoomNode(currentNode.BottomLeftAreaCorner,
+                new Vector2Int(currentNode.TopRightAreaCorner.x, line.Coordinates.y),
+                currentNode,
+                currentNode.TreeLayerIndex + 1);
+            node2 = new RoomNode(new Vector2Int(currentNode.BottomLeftAreaCorner.x, line.Coordinates.y),
+                currentNode.TopRightAreaCorner,
+                currentNode,
+                currentNode.TreeLayerIndex + 1);
         }
         else
         {
-            node1 = new RoomNode(curretNode.BottomLeftAreaCorner,
-                new Vector2Int(line.Coordinates.x, curretNode.TopRightAreaCorner.y),
-                curretNode,
-                curretNode.TreeLayerIndex + 1);
-            node2 = new RoomNode(new Vector2Int(line.Coordinates.x, curretNode.BottomLeftAreaCorner.y),
-                curretNode.TopRightAreaCorner,
-                curretNode,
-                curretNode.TreeLayerIndex + 1);
+            node1 = new RoomNode(currentNode.BottomLeftAreaCorner,
+                new Vector2Int(line.Coordinates.x, currentNode.TopRightAreaCorner.y),
+                currentNode,
+                currentNode.TreeLayerIndex + 1);
+            node2 = new RoomNode(new Vector2Int(line.Coordinates.x, currentNode.BottomLeftAreaCorner.y),
+                currentNode.TopRightAreaCorner,
+                currentNode,
+                currentNode.TreeLayerIndex + 1);
         }
         AddNewNodeToCollections(listToReturn, graph, node1);
         AddNewNodeToCollections(listToReturn, graph, node2);
@@ -73,21 +77,25 @@ public class BinarySpacePartitioner
         graph.Enqueue(node);
     }
 
+    // 공간을 수직으로 나눌지 수평으로 나눌지를 결정함
     private Line GetLineDividingSpace(Vector2Int bottomLeftAreaCorner, Vector2Int topRightAreaCorner, int roomWidthMin, int roomLengthMin)
     {
-        Orientation orientation;
+        Orientation orientation; // Line의 종류(수직, 수평)
         bool lengthStatus = (topRightAreaCorner.y - bottomLeftAreaCorner.y) >= 2 * roomLengthMin;
         bool widthStatus = (topRightAreaCorner.x - bottomLeftAreaCorner.x) >= 2 * roomWidthMin;
         if (lengthStatus && widthStatus)
         {
+            // 랜덤으로 수직, 수평을 정함
             orientation = (Orientation)(Random.Range(0, 2));
         }
         else if (widthStatus)
         {
+            // 수직으로 정함
             orientation = Orientation.Vertical;
         }
         else
         {
+            // 수평으로 정함
             orientation = Orientation.Horizontal;
         }
         return new Line(orientation, GetCoordinatesForOrientation(

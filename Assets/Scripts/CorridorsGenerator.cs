@@ -4,6 +4,7 @@ using System.Linq;
 
 public class CorridorsGenerator
 {
+    // 복도 생성하기
     public List<Node> CreateCorridor(List<RoomNode> allNodesCollection, int corridorWidth)
     {
         List<Node> corridorList = new List<Node>();

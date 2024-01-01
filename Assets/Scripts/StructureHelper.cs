@@ -5,27 +5,39 @@ using Random = UnityEngine.Random;
 
 public static class StructureHelper
 {
+    // 잎 노드 찾는 함수
     public static List<Node> TraverseGraphToExtractLowestLeafes(Node parentNode)
     {
+        // 초기화
         Queue<Node> nodesToCheck = new Queue<Node>();
         List<Node> listToReturn = new List<Node>();
+
+        // 부모의 자식이 없다면 리턴
         if(parentNode.ChildrenNodeList.Count == 0)
         {
             return new List<Node>() { parentNode };
         }
+
+        // 자식을 큐에 넣음
         foreach (var child in parentNode.ChildrenNodeList)
         {
             nodesToCheck.Enqueue(child);
         }
+
+        // 큐에 넣은 자식이 없을때까지 반복
+        // 잎 노드를 찾기위한 코드
         while (nodesToCheck.Count > 0)
         {
             var currentNode = nodesToCheck.Dequeue();
+            
+            // 잎 노드 찾기
             if(currentNode.ChildrenNodeList.Count == 0)
             {
                 listToReturn.Add(currentNode);
             }
             else
             {
+                // 아니면 다시 반복
                 foreach(var child in currentNode.ChildrenNodeList)
                 {
                     nodesToCheck.Enqueue(child);
@@ -35,6 +47,7 @@ public static class StructureHelper
         return listToReturn;
     }
 
+    // 룸의 하단 좌측의 좌표를 설정(간격)
     public static Vector2Int GenerateBottomLeftCornerBetween(
         Vector2Int boundaryLeftPoint, Vector2Int boundaryRightPoint, float pointModifier, int offset)
     {

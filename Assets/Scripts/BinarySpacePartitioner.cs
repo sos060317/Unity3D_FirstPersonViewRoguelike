@@ -24,7 +24,7 @@ public class BinarySpacePartitioner
         listToReturn.Add(this.rootNode);
         int iterations = 0;
 
-        // 
+        // 반복 횟수에 도달할때까지 반복 & Queue 안에 남아있는게 있을 때까지
         while (iterations < maxIterations && graph.Count > 0)
         {
             iterations++;

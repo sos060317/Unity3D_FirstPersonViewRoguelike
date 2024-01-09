@@ -68,6 +68,7 @@ public class DungeonCreator : MonoBehaviour
         CreateWalls(wallParent);
     }
 
+    // 던전 벽(여러개)생성
     private void CreateWalls(GameObject wallParent)
     {
         // 가로 벽
